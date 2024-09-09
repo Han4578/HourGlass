@@ -26,7 +26,27 @@ void generate_daily_report() {
 }
 
 void generate_weekly_report() {
+	float daily_total_money[7] = {};
+	float weekly_total_money = 0.0;
 
+	for (int day = 0; day < 7; day++) {
+		cout << "Total earnings for day " << day + 1 << " : ";
+		cin >> daily_total_money[day];
+		weekly_total_money += daily_total_money[day];
+	}
+
+	cout << "___________________________________________\n";
+	cout << '|' << right << setw(28) << "WEEKLY REPORT" << setw(15) << "|\n";
+	cout << "|_________________________________________|\n";
+	cout << left << setw(10) << "|  Day" << right << setw(30) << "Total Earnings (RM)" << "  |\n";
+	cout << "|_________________________________________|\n";
+
+	for (int day = 0; day < 7; day++) cout << "|   " << left << setw(9) << (day + 1) << setw(27) << right << fixed << setprecision(2) << daily_total_money[day] << right << "  |\n";
+
+	cout << "|_________________________________________|\n";
+	cout << left << setw(30) << "| Weekly Total" << right << setw(10) << weekly_total_money << "  |\n";
+	cout << left << setw(30) << "| Weekly Average" << right << setw(10) << weekly_total_money / 7 << "  |\n";
+	cout << "|_________________________________________|\n";
 }
 
 void generate_summary_report(int customers) {
@@ -58,12 +78,13 @@ void generate_summary_report(int customers) {
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << "Total(RM): " << setw(width / 2 - 1) << setprecision(2) << left << total << "|\n";
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Total Products Sold: " << setw(width / 2 - 1) << setprecision(0) << left << quantity << "|\n";
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Number of Customers: " << setw(width / 2 - 1) << left << customers << "|\n";
-	cout << '|' << setw(width - 2) << setfill('_') << '_' << "|\n";
+	cout << '|' << setw(width - 2) << setfill('_') << '_' << setfill(' ') << "|\n";
 }
 
 void report(int customers) {
 	int a;
 	char b;
+	string invalid = "";
 
 	cout << "Enter report type[1-4]\n";
 	cout << "1. Daily Report\n";
@@ -94,8 +115,13 @@ void report(int customers) {
 					break;
 			}
 		} while (a < 1 || a > 4);
-		cout << "Continue? (Y/N): ";
-		cin >> b;
-		b = toupper(b);
+
+		do {
+			cout << "Continue? (Y/N): ";
+			cin >> b;
+			getline(cin, invalid);
+			b = toupper(b);
+		} while (b != 'Y' && b != 'N');
+
 	} while (b == 'Y');
 }

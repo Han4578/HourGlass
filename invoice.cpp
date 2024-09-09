@@ -11,8 +11,8 @@ float generate_invoice() {
     cout << '|' << setw((52 - tel.length()) / 2) << ' ' << tel << setw((52 - tel.length()) / 2) << ' ' << '|' << endl;
     cout << '|' << setw((52 - time.length()) / 2) << ' ' << time << setw((52 - time.length()) / 2) << ' ' << '|' << endl;
 
-    for (int inv = 0; inv < number_of_categories; inv++) {
-        for (int inv2 = 0; inv2 < products_per_category; inv2++) {
+    for (int inv = 0; inv < number_of_categories; ++inv) {
+        for (int inv2 = 0; inv2 < products_per_category; ++inv2) {
             if (products[inv][inv2].currently_ordered > 0) {
                 float totalprice;
                 totalitems += products[inv][inv2].currently_ordered;
@@ -24,21 +24,21 @@ float generate_invoice() {
     }
 
     cout << "|" << setw(52) << setfill('_') << '_' << "|\n";
-    cout << "|" << setfill(' ') << setw(28) << right << "Subtotal : RM" << setw(23) << left << total << " | " << endl;
-    cout << "|" << setw(26) << right << "Discount : " << setw(26) << left << "5%" << "| " << endl;
-    cout << "|" << setw(26) << right << "Service Charge : " << setw(26) << left << "2%" << "|" << endl;
-    cout << "|" << setw(26) << right << "Tax : " << setw(26) << left << "5%" << "|" << endl;
+    cout << "|" << setfill(' ') << setw(41) << right << "Subtotal :  RM" << setw(8) << total <<"   |" << endl;
+    cout << "|" << setw(41) << right << "Discount(5%) :  RM" << setw(8) << total * 0.05 <<"   |" << endl;
+    cout << "|" << setw(41) << right << "Service Charge(2%) :  RM" << setw(8) << total * 0.02 <<"   |" << endl;
+    cout << "|" << setw(41) << right << "Tax (5%) :  RM" << setw(8) << total * 0.05 <<"   |" << endl;
     cout << "|" << setw(52) << setfill('_') << '_' << "|\n";
-    cout << "|" << setfill(' ') << setw(26) << right << "Total items : " << setw(25) << left << totalitems << " | " << endl;
-    cout << "|" << setw(28) << right << "Total payable : RM" << setw(23) << left << total * 0.95 * 1.02 * 1.05 << " | " << endl;
+    cout << "|" << setfill(' ') << setw(39) << right << "Total items :  " << setw(10) << totalitems <<"   |" << endl;
+    cout << "|" << setw(41) << right << "Total payable :  RM" << setw(8) << total * 0.95 * 1.02 * 1.05 <<"   |" << endl;
     cout << "|" << setw(52) << setfill('_') << '_' << "|\n";
 
     return total;
 }
 
 bool invoice() {
-    string pay1 = "", payment = "", disval = "true", payval = "false", excluded = "";
-    char answer = ' ';
+    string pay1 = "", disval = "true", payval = "false", excluded = "";
+    char answer = ' ', method = ' ';
     float pay = 0;
     const float total = generate_invoice();   
 
@@ -57,12 +57,13 @@ bool invoice() {
 
     if (answer == 'N') return false;
 
-    while (payment != "Cash" && payment != "E-wallet") {
-        cout << "Payment method ? (Cash or E-wallet)" << endl;
-        getline(cin, payment);
-        if (payment != "Cash" && payment != "E-wallet") {
-            cout << "Please re-enter a valid data!" << endl;
-        }
+    while (method != 'C' && method != 'E') {
+        cout << "Payment method ? [C: Cash, E: E-Wallet]: " << endl;
+        cin >> method;
+        method = toupper(method);
+        getline(cin, excluded);
+
+        if (method != 'C' && method != 'E') cout << "Please re-enter a valid data!" << endl;
     }
 
     while (pay < (total * 0.95 * 1.02 * 1.05) || pay - (total * 0.95 * 1.02 * 1.05) > 1000) {
@@ -80,10 +81,10 @@ bool invoice() {
 
     generate_invoice();
 
-    cout << "|" << setfill(' ') << setw(26) << right << "Payment method : " << setw(26) << left << payment << "|" << endl;
-    cout << "|" << setw(28) << right << "Payment amount : RM" << setw(24) << left << pay << "|" << endl;
-    cout << "|" << setw(28) << right << "  Change : RM" << setw(24) << left << pay - (total * 0.95 * 1.02 * 1.05) << "|" << endl;
-    cout << "|" << setw(53) << right << setfill('_') << "|" << endl;
+    cout << "|" << setfill(' ') << setw(39) << right << "Payment method : " << setw(10) << ((method == 'C') ? "Cash" : "E-Wallet") << "   |" << endl;
+    cout << "|" << setw(41) << right << "Payment amount : RM" << setw(8) << pay << "   |" << endl;
+    cout << "|" << setw(41) << "  Change : RM" << setw(8) << pay - (total * 0.95 * 1.02 * 1.05) << "   |" << endl;
+    cout << "|" << setw(53) << setfill('_') << "|" << endl;
 
     for (int inv = 0; inv < number_of_categories; ++inv) {
         for (int inv2 = 0; inv2 < products_per_category; ++inv2) {

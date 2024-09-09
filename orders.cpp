@@ -16,7 +16,7 @@ int get_input(string message, int min, int max, string invalid_message) {
 }
 
 struct Order {
-	const int category = 0, product_number = 0, quantity = 0;
+	int category = 0, product_number = 0, quantity = 0;
 };
 
 Order get_order(bool get_quantity) {

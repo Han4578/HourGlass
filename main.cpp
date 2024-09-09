@@ -44,7 +44,7 @@ bool new_customer(int id) {
 			"4. Show Invoice\n"
 			"5. Cancel\n";
 		choice = get_input("Enter next action[1-5]: ", 1, 5, "Invalid action, please try again");
-
+		cout << '\n';
 		switch (choice) {
 			case 1: // add order
 				add_order();
@@ -75,6 +75,7 @@ int main() {
 		"2. Report\n"
 		"3. Exit\n";
 		int choice = get_input("Please select an action[1-3]: ", 1, 3, "Invalid action, please try again"), customer_id = 0;
+		cout << '\n';
 
 		switch (choice) {
 			case 1:
