@@ -26,13 +26,13 @@ void generate_daily_report() {
 }
 
 void generate_weekly_report() {
-	float daily_total_money[7] = {};
-	float weekly_total_money = 0.0;
+	float daily_sales[7] = {};
+	float total_sales = 0.0;
 
 	for (int day = 0; day < 7; day++) {
 		cout << "Total earnings for day " << day + 1 << " : ";
-		cin >> daily_total_money[day];
-		weekly_total_money += daily_total_money[day];
+		cin >> daily_sales[day];
+		total_sales += daily_sales[day];
 	}
 
 	cout << "___________________________________________\n";
@@ -41,11 +41,11 @@ void generate_weekly_report() {
 	cout << left << setw(10) << "|  Day" << right << setw(30) << "Total Earnings (RM)" << "  |\n";
 	cout << "|_________________________________________|\n";
 
-	for (int day = 0; day < 7; day++) cout << "|   " << left << setw(9) << (day + 1) << setw(27) << right << fixed << setprecision(2) << daily_total_money[day] << right << "  |\n";
+	for (int day = 0; day < 7; day++) cout << "|   " << left << setw(9) << (day + 1) << setw(27) << right << fixed << setprecision(2) << daily_sales[day] << right << "  |\n";
 
 	cout << "|_________________________________________|\n";
-	cout << left << setw(30) << "| Weekly Total" << right << setw(10) << weekly_total_money << "  |\n";
-	cout << left << setw(30) << "| Weekly Average" << right << setw(10) << weekly_total_money / 7 << "  |\n";
+	cout << left << setw(30) << "| Weekly Total" << right << setw(10) << total_sales << "  |\n";
+	cout << left << setw(30) << "| Weekly Average" << right << setw(10) << total_sales / 7 << "  |\n";
 	cout << "|_________________________________________|\n";
 }
 

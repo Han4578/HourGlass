@@ -2,7 +2,7 @@
 
 int get_input(string message, int min, int max, string invalid_message) {
 	int input = 0;
-	string invalid_input;
+	string invalid_input = "";
 	while (true) {
 		cout << message;
 		cin >> input;
