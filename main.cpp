@@ -2,16 +2,22 @@
 #include <fstream>
 
  Product products[number_of_categories][products_per_category] = {
-	{ {"ADDE", 49}, {"POÄNG", 309}, {"FLINTAN", 299.99f}, {"TEODORES", 125}, {"MARIUS", 25}}, //chairs
+	{ {"ADDE", 49}, {"POÃ„NG", 309}, {"FLINTAN", 299.99f}, {"TEODORES", 125}, {"MARIUS", 25}}, //chairs
 	{ {"LAGKAPTEN", 428}, {"UTESPELARE", 599.99f}, {"SANDSBERG", 179}, {"MITTZON", 799}, {"KNARREVIK", 39}}, //tables
-	{ {"LERBERG", 89}, {"KALLAX", 299}, {"LACK", 299}, {"FRÖSJÖN", 99}, {"FRYKSÅS", 149}} //shelves
+	{ {"LERBERG", 89}, {"KALLAX", 299}, {"LACK", 299}, {"FRÃ–SJÃ–N", 99}, {"FRYKSÃ…S", 149}} //shelves
 };
 
 
 void display_logo() {
-	ifstream logo("logo.txt");
+	ifstream logo("logo.dat");
+	
+	if (!logo) {
+		cout << "Error opening file to display logo\n";
+		return;
+	}
+	
 	string line;
-	while (getline(logo, line))	cout << line << '\n';
+	while (getline(logo, line)) cout << line << '\n';
 	logo.close();
 }
 
