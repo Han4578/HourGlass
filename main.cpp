@@ -25,12 +25,12 @@ string calculate_time() {
 	const int t = time(NULL);
 	const int seconds = t % 60;
 	const int minutes = (t % (60 * 60)) / 60;
-	const int hours = (t % (60 * 60 * 60)) / 3600 + 7;//change time zone to UTC+7
+	const int hours = ((t % (60 * 60 * 60)) / 3600 + 7) % 24;//change time zone to UTC+7
 
 	string times[number_of_categories] = {to_string(seconds), to_string(minutes), to_string((hours % 12) + 1)};
 	for (int i = 0; i < number_of_categories; ++i) if (times[i].length() < 2) times[i].insert(0, "0");
 
-	return times[2] + ':' + times[1] + ':' + times[0] + ((hours > 12) ? "PM" : "AM");
+	return times[2] + ':' + times[1] + ':' + times[0] + ((hours >= 11) ? "PM" : "AM");
 }
 
 bool new_customer(int id) {
