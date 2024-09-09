@@ -14,10 +14,8 @@ float generate_invoice() {
     for (int inv = 0; inv < number_of_categories; ++inv) {
         for (int inv2 = 0; inv2 < products_per_category; ++inv2) {
             if (products[inv][inv2].currently_ordered > 0) {
-                float totalprice;
                 totalitems += products[inv][inv2].currently_ordered;
-                totalprice = products[inv][inv2].price * products[inv][inv2].currently_ordered;
-                total += totalprice;
+                total += products[inv][inv2].price * products[inv][inv2].currently_ordered;
                 cout << "|  " << setw(17) << setfill(' ') << left << products[inv][inv2].name << right << "(RM" << setprecision(2) << setw(6) << products[inv][inv2].price << " X " << setw(2) << products[inv][inv2].currently_ordered << left << setw(6) << ")" << "RM" << right << setw(8) << round(totalprice * 100) / 100 << "   |" << endl;
             }
         }
