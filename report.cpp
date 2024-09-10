@@ -1,4 +1,5 @@
 #include "functions.h"
+#include <cctype>
 
 void generate_daily_report() {
 	const string unsold = "---No products sold---";
@@ -28,10 +29,72 @@ void generate_daily_report() {
 void generate_weekly_report() {
 	float daily_sales[7] = {};
 	float total_sales = 0.0;
+	const string limit = "1000000000";
+	string input = "";
+	bool flag = true, is_limit = false;
+
+	cout << "Please input data for all 7 days of the week. \nData must be between 0 and 1,000,000,000 inclusive. \nOnly the first 2 decimals will be read.\nEnter Q to cancel\n\n";
 
 	for (int day = 0; day < 7; day++) {
-		cout << "Total earnings for day " << day + 1 << " : ";
-		cin >> daily_sales[day];
+		while (true) {
+			is_limit = false;
+			float sales = 0;
+			cout << "Total earnings for day " << day + 1 << " : ";
+			getline(cin, input);
+
+			flag = input != "";
+
+			if (input == "Q" || input == "q") return;
+
+			for (int i = 0; i < input.length(); ++i) {
+				if (input[i] != '0') {
+					input = input.substr(i);
+					break;
+				}
+			}
+			
+			for (int i = 0; i < input.length() && flag; ++i) {
+				if (isdigit(input[i])) {
+					sales *= 10;
+					sales += input[i] - '0';
+
+					if (i > 8) {
+						if (i > 9) flag = false;
+						else {
+							is_limit = true;
+							for (int j = 0; j < limit.length(); ++j) if (input[j] != limit[j]) {
+								flag = false;
+								break;
+							}
+						}
+					}
+
+				} else if (input[i] == '.') {
+					string decimal = "0.";
+					for (int j = i + 1; j < input.length() && j < i + 3; ++j) {
+						if (isdigit(input[j])) {
+							decimal += input[j];
+						} else {
+							flag = false;
+							break;
+						}
+					}
+
+					if (is_limit && stof(decimal) > 0) flag = false;
+
+					sales += stof(decimal);
+					break;
+				} else flag = false;
+			}
+
+			if (!flag) {
+				cout << "Please enter a valid number more than or equal to 0 but less than 1,000,000,000.\n";
+				continue;
+			}
+
+			daily_sales[day] = sales;
+			break;
+		}
 		total_sales += daily_sales[day];
 	}
 
@@ -44,8 +107,8 @@ void generate_weekly_report() {
 	for (int day = 0; day < 7; day++) cout << "|   " << left << setw(9) << (day + 1) << setw(27) << right << fixed << setprecision(2) << daily_sales[day] << right << "  |\n";
 
 	cout << "|_________________________________________|\n";
-	cout << left << setw(30) << "| Weekly Total" << right << setw(10) << total_sales << "  |\n";
-	cout << left << setw(30) << "| Weekly Average" << right << setw(10) << total_sales / 7 << "  |\n";
+	cout << left << setw(20) << "| Weekly Total" << right << setw(20) << total_sales << "  |\n";
+	cout << left << setw(20) << "| Weekly Average" << right << setw(20) << total_sales / 7 << "  |\n";
 	cout << "|_________________________________________|\n";
 }
 
@@ -82,9 +145,8 @@ void generate_summary_report(int customers) {
 }
 
 void report(int customers) {
-	int a;
-	char b;
-	string invalid = "";
+	string input = "";
+	char first_char = ' ';
 
 	cout << "Enter report type[1-4]\n";
 	cout << "1. Daily Report\n";
@@ -95,33 +157,33 @@ void report(int customers) {
 	do {
 		do {
 			cout << "Your number: ";
-			cin >> a;
+			getline(cin, input);
+			first_char = input[0];
 
-			switch (a) {
-				case 1:
+			switch (first_char) {
+				case '1':
 					generate_daily_report();
 					break;
-				case 2:
+				case '2':
 					generate_weekly_report();
 					break;
-				case 3:
+				case '3':
 					generate_summary_report(customers);
 					break;
-				case 4:
+				case '4':
 					cout << "Exiting...\n";
 					return;
 				default:
 					cout << "Invalid input, please re_enter.\n";
 					break;
 			}
-		} while (a < 1 || a > 4);
+		} while (first_char < '1' || first_char > '4');
 
 		do {
 			cout << "Continue? (Y/N): ";
-			cin >> b;
-			getline(cin, invalid);
-			b = toupper(b);
-		} while (b != 'Y' && b != 'N');
+			getline(cin, input);
+			first_char = toupper(input[0]);
+		} while (first_char != 'Y' && first_char != 'N');
 
-	} while (b == 'Y');
+	} while (first_char == 'Y');
 }

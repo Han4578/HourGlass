@@ -42,6 +42,11 @@ void add_order() {
 void remove_order() {
 	cout << "\nRemove order selected.\n";
 	const Order order = get_order(false);
-	products[order.category - 1][order.product_number - 1].currently_ordered = 0;
-	cout << "\nProduct " << products[order.category - 1][order.product_number - 1].name << " has been removed.\n";
+
+	if (products[order.category - 1][order.product_number - 1].currently_ordered == 0) {
+		cout << "\nProduct " << products[order.category - 1][order.product_number - 1].name << " was not ordered.\n";
+	} else {
+		products[order.category - 1][order.product_number - 1].currently_ordered = 0;
+		cout << "\nProduct " << products[order.category - 1][order.product_number - 1].name << " has been removed.\n";
+	}
 }

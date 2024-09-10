@@ -65,6 +65,11 @@ bool new_customer(int id) {
 				if (invoice()) return true; //if receipt is generated and payment is made, return true
 				break;
 			case 5:
+				for (int i = 0; i < number_of_categories; ++i) {
+					for (int j = 0; j < products_per_category; ++j) {
+						products[i][j].currently_ordered = 0;
+					}
+				}
 				return false; // cancel
 			default:
 				break;

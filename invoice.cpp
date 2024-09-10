@@ -15,7 +15,8 @@ float generate_invoice() {
         for (int inv2 = 0; inv2 < products_per_category; ++inv2) {
             if (products[inv][inv2].currently_ordered > 0) {
                 totalitems += products[inv][inv2].currently_ordered;
-                total += products[inv][inv2].price * products[inv][inv2].currently_ordered;
+                float totalprice = products[inv][inv2].price * products[inv][inv2].currently_ordered;
+                subtotal += totalprice;
                 cout << "|  " << setw(17) << setfill(' ') << left << products[inv][inv2].name << right << "(RM" << setprecision(2) << setw(6) << products[inv][inv2].price << " X " << setw(2) << products[inv][inv2].currently_ordered << left << setw(6) << ")" << "RM" << right << setw(8) << round(totalprice * 100) / 100 << "   |" << endl;
             }
         }
@@ -41,7 +42,7 @@ bool invoice() {
     const float total = generate_invoice();   
 
     if (total == 0) {
-        cout << "No items bought, cannot confirm purchase\n";
+        cout << "No items ordered, cannot confirm purchase\n";
         return false;
     }
 
@@ -56,7 +57,7 @@ bool invoice() {
     if (answer == 'N') return false;
 
     while (answer != 'C' && answer != 'E') {
-        cout << "Payment answer ? [C: Cash, E: E-Wallet]: " << endl;
+        cout << "Payment method? [C: Cash, E: E-Wallet]: " << endl;
         cin >> answer;
         answer = toupper(answer);
         getline(cin, excluded);
