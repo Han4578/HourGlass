@@ -78,14 +78,14 @@ bool new_customer(int id) {
 }
 
 int main() {
-	display_logo();
-
 	while (true) {
-	cout << "\nWelcome!\n"
-		"1. New Order Entry\n"
-		"2. Report\n"
-		"3. Exit\n";
-		int choice = get_input("Please select an action[1-3]: ", 1, 3, "Invalid action, please try again"), customer_id = 0;
+		display_logo();
+		cout << "\nWelcome!\n"
+				"1. New Order Entry\n"
+				"2. Report\n"
+				"3. Import\n"
+				"4. Exit\n";
+		int choice = get_input("Please select an action[1-4]: ", 1, 4, "Invalid action, please try again"), customer_id = 0;
 		cout << '\n';
 
 		switch (choice) {
@@ -96,6 +96,9 @@ int main() {
 				report(customer_id);
 				break;
 			case 3:
+				import();
+				break;
+			case 4:
 				return 0; //exit
 		}
 	}

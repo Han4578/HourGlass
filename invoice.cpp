@@ -32,7 +32,7 @@ float generate_invoice() {
     cout << "|" << setw(41) << right << "Total payable :  RM" << setw(8) << subtotal * 0.95 * 1.02 * 1.05 <<"   |" << endl;
     cout << "|" << setw(52) << setfill('_') << '_' << "|\n";
 
-    return subtotal * 0.95 * 1.02 * 1.05;
+    return subtotal * 0.95f * 1.02f * 1.05f;
 }
 
 bool invoice() {
@@ -90,6 +90,10 @@ bool invoice() {
             if (products[inv][inv2].currently_ordered == 0) continue;
             products[inv][inv2].total_sold += products[inv][inv2].currently_ordered;
             products[inv][inv2].currently_ordered = 0;
+            if (products[inv][inv2].total_sold > 1000000000 || products[inv][inv2].total_sold < 0) {
+                cout << "Each product has a maximum quantity of 1,000,000,000, the quantity for " << products[inv][inv2].name << " has been set to 1,000,000,000";
+                products[inv][inv2].total_sold = 1000000000;
+            }
         }
     }
 

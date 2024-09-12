@@ -15,12 +15,27 @@ int get_input(string message, int min, int max, string invalid_message) {
 	return input;
 }
 
+int get_input(string message, char min, char max, string invalid_message) {
+	char input = 0;
+	string invalid_input = "";
+	while (true) {
+		cout << message;
+		cin >> input;
+		cin.clear();
+		getline(cin, invalid_input);
+
+		if (input > min - 1 && input < max + 1) break;
+		cout << '\n' << invalid_message << "\n\n";
+	}
+	return input;
+}
+
 struct Order {
 	int category = 0, product_number = 0, quantity = 0;
 };
 
 Order get_order(bool get_quantity) {
-	const int category = get_input("Enter Category[1-3]:", 1, 3, "Invalid category, please try again.");
+	const int category = get_input("Enter Category[A-C]:", 'A', 'C', "Invalid category, please try again.");
 	const int product_number = get_input("Enter Product Number[1-5]:", 1, 5, "Invalid product number, please try again.");
 	const int quantity = (get_quantity) ? get_input("Enter Quantity[1-10]:", 1, 10, "Invalid quantity, please try again.") : 0;
 

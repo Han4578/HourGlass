@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <stdlib.h>
 using namespace std;
 
 struct Product {
@@ -27,5 +28,7 @@ void display_table();
 bool invoice();
 
 void report(int customers);
+
+void import();
 
 string calculate_time();
