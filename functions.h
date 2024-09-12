@@ -17,7 +17,7 @@ extern Product products[number_of_categories][products_per_category];
 const string categories[number_of_categories] = { "Chairs", "Tables", "Shelves" };
 
 
-int get_input(string message, int min, int max, string invalid_message);
+int get_input(string message, int min, int max, string invalid_message, bool escapable);
 
 void add_order();
 
