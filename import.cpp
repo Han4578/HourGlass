@@ -5,6 +5,8 @@ void import() {
 	ifstream file;
 
 	while (true) {
+		system("cls");
+
 		int imported[number_of_categories][products_per_category] = { 0 };
 		string input = "", invalid;
 		bool warning = false;
@@ -13,7 +15,7 @@ void import() {
 		cout << "Please ensure that the format of the file is correct, each line should have " << products_per_category << " numbers \n"
 				"indicating the quantity sold for each product. Each number should be separated by a space or a tab.\n"
 				"There should be " << number_of_categories << " lines in total. Incorrect format may result in incorrect import.\n"
-				"Numbers can only be whole numbers with no decimals or negative signs and no more than 7 digits. All symbols will be ignored.\n\n"
+				"Numbers can only be whole numbers with no decimals or negative signs and no more than 7 digits.\nAll symbols will be ignored.\n\n"
 				"Enter file name here (.dat), enter Q to cancel: ";
 		getline(cin, input);
 
@@ -23,6 +25,7 @@ void import() {
 		file.open(input + ".dat");
 		if (!file) {
 			cout << "\nFile not found, please try again\n\n";
+			system("pause");
 			continue;
 		}
 
@@ -88,7 +91,8 @@ void import() {
 			}
 		}
 
-		cout << "Import complete.\n";
+		cout << "Import complete.\n\n";
+		system("pause");
 		return;
 	}
 }

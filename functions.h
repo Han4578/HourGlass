@@ -12,7 +12,18 @@ struct Product {
 
 const int number_of_categories = 3, products_per_category = 5;
 
+struct Customer {
+	string name = "";
+	string password;
+	int cart[number_of_categories][products_per_category] = {0};
+	int recent_orders[3][number_of_categories][products_per_category] = {0};
+	int order_index = 0;
+};
+
+
 extern Product products[number_of_categories][products_per_category];
+
+extern Customer user;
 
 const string categories[number_of_categories] = { "Chairs", "Tables", "Shelves" };
 
@@ -23,11 +34,13 @@ void add_order();
 
 void remove_order();
 
+void cancel_order();
+
 void display_table();
 
 bool invoice();
 
-void report(int customers);
+void report();
 
 void import();
 

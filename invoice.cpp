@@ -88,6 +88,7 @@ bool invoice() {
     for (int inv = 0; inv < number_of_categories; ++inv) {
         for (int inv2 = 0; inv2 < products_per_category; ++inv2) {
             if (products[inv][inv2].currently_ordered == 0) continue;
+            user.recent_orders[user.order_index][inv][inv2] = products[inv][inv2].currently_ordered;
             products[inv][inv2].total_sold += products[inv][inv2].currently_ordered;
             products[inv][inv2].currently_ordered = 0;
             if (products[inv][inv2].total_sold > 1000000000 || products[inv][inv2].total_sold < 0) {
@@ -96,6 +97,6 @@ bool invoice() {
             }
         }
     }
-
+    user.order_index = (user.order_index + 1) % 3;
     return true;
 }

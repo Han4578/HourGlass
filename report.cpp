@@ -2,9 +2,9 @@
 #include <cctype>
 
 void generate_daily_report() {
+	system("cls");
 	const string unsold = "---No products sold---";
 	cout << "Daily Report\n\n";
-	system("cls");
 
 	float total_earnings = 0.0;
 	cout << fixed << "________________________________________________________\n";
@@ -27,9 +27,12 @@ void generate_daily_report() {
 	}
 	cout << "| Total earnings for the day: RM" << setw(23) << setprecision(2) << left << total_earnings << "|\n";
 	cout << "|______________________________________________________|\n\n";
+
+	system("pause");
 }
 
-void generate_top_sales_report() {
+void generate_top_revenue_report() {
+	system("cls");
 	Product total_products[number_of_categories * products_per_category] = {};
 	int number = 0;
 
@@ -39,7 +42,8 @@ void generate_top_sales_report() {
 		}
 	}
 
-	for (int i = 0; i < number_of_categories * products_per_category; i++) {
+
+	for (int i = 0; i < 10; i++) {
 		for (int j = i + 1; j < products_per_category; j++) {
 			float total1 = total_products[i].price * total_products[i].total_sold;
 			float total2 = total_products[j].price * total_products[j].total_sold;
@@ -51,16 +55,22 @@ void generate_top_sales_report() {
 		}
 	}
 
-	cout << fixed << "TOP 10 PRODUCT HOT:" << endl;
+	cout << "_____________________________________________________\n";
+	cout << "|" << setw(34) << "TOP REVENUE REPORT" << setw(19) << "|\n";
+	cout << "|___________________________________________________|\n";
+	cout << "| " << left << setw(15) << "No. Product" << "|" << right << setw(12) << "PRICE(RM)" << "|" << right << setw(9) << "QUANTITY" << "|" << right << setw(11) << "TOTAL(RM)" << "|" << endl;
+	cout << "|---------------------------------------------------|\n";
 	for (int i = 0; i < 10; i++) {
-		cout << i + 1 << ". PRODUCT: " << total_products[i].name;
-		cout << " , PRICE: " << total_products[i].price;
-		cout << setprecision(0) << " , QUANTITY: " << total_products[i].total_sold;
-		cout << setprecision(2) << " , TOTAL: " << total_products[i].price * total_products[i].total_sold << endl;
+		cout << "| " << right << setw(2) << i + 1 << ". " << left << setw(10) << total_products[i].name;
+		cout << " | " << right << setw(10) << fixed << setprecision(2) << total_products[i].price;
+		cout << " | " << right << setw(7) << total_products[i].total_sold;
+		cout << " | " << right << setw(10) << total_products[i].price * total_products[i].total_sold << "|\n";
 	}
+	cout << "|________________|____________|_________|___________|\n";
 }
 
-void generate_summary_report(int customers) {
+void generate_summary_report() {
+	system("cls");
 	const string title = "Summary Report";
 	const int width = 70;
 	float total = 0;
@@ -88,22 +98,25 @@ void generate_summary_report(int customers) {
 	}
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << "Total(RM): " << setw(width / 2 - 1) << setprecision(2) << left << total << "|\n";
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Total Products Sold: " << setw(width / 2 - 1) << setprecision(0) << left << quantity << "|\n";
-	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Number of Customers: " << setw(width / 2 - 1) << left << customers << "|\n";
+	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Number of Customers: " << setw(width / 2 - 1) << left << 0 << "|\n";
 	cout << '|' << setw(width - 2) << setfill('_') << '_' << setfill(' ') << "|\n";
+
+	system("pause");
 }
 
-void report(int customers) {
+void report() {
 	string input = "";
 	char first_char = ' ';
 
-	cout << "Enter report type[1-4]\n";
-	cout << "1. Daily Report\n";
-	cout << "2. Top Sales Report\n";
-	cout << "3. Summary Report\n";
-	cout << "4. Exit\n";
-
 	do {
 		do {
+			system("cls");
+
+			cout << "Enter report type[1-4]\n";
+			cout << "1. Daily Report\n";
+			cout << "2. Top Revenue Report\n";
+			cout << "3. Summary Report\n";
+			cout << "4. Exit\n";
 			cout << "Your number: ";
 			getline(cin, input);
 			first_char = input[0];
@@ -113,10 +126,10 @@ void report(int customers) {
 					generate_daily_report();
 					break;
 				case '2':
-					generate_top_sales_report();
+					generate_top_revenue_report();
 					break;
 				case '3':
-					generate_summary_report(customers);
+					generate_summary_report();
 					break;
 				case '4':
 					cout << "Exiting...\n";
