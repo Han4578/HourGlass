@@ -8,7 +8,7 @@ void import() {
 		system("cls");
 
 		int imported[number_of_categories][products_per_category] = { 0 };
-		string input = "", invalid;
+		string input = "";
 		bool warning = false;
 		char confirm = ' ';
 
@@ -65,18 +65,7 @@ void import() {
 			}
 		}
 
-		if (warning) {
-			cout << "\nWarnings were found, do you wish to continue?[Y/N]";
-		} else cout << "\nNo warnings were found, do you wish to continue?[Y/N]";
-
-		while (confirm != 'N' && confirm != 'Y') {
-			cin >> confirm;
-			getline(cin, invalid); //clear input
-			confirm = toupper(confirm);
-			if (confirm != 'N' && confirm != 'Y') cout << "Invalid input, please try again.\n";
-		}
-
-		if (confirm == 'N') { 
+		if (!get_bool((warning)? "\nWarnings were found, do you wish to continue?[Y/N]": "\nNo warnings were found, do you wish to continue?[Y/N]", "Invalid input, please try again.\n")) { 
 			system("cls");
 			continue; 
 		}

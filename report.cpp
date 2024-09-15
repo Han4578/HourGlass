@@ -105,46 +105,31 @@ void generate_summary_report() {
 }
 
 void report() {
-	string input = "";
-	char first_char = ' ';
-
 	do {
-		do {
-			system("cls");
+		system("cls");
+		cout << "Enter report type[1-4]\n";
+		cout << "1. Daily Report\n";
+		cout << "2. Top Revenue Report\n";
+		cout << "3. Summary Report\n";
+		cout << "4. Exit\n";
+		int input = get_input("Enter report type[1-4]: ", 1, 4, "Invalid input, please re_enter.", false);
 
-			cout << "Enter report type[1-4]\n";
-			cout << "1. Daily Report\n";
-			cout << "2. Top Revenue Report\n";
-			cout << "3. Summary Report\n";
-			cout << "4. Exit\n";
-			cout << "Your number: ";
-			getline(cin, input);
-			first_char = input[0];
+		switch (input) {
+			case 1:
+				generate_daily_report();
+				break;
+			case 2:
+				generate_top_revenue_report();
+				break;
+			case 3:
+				generate_summary_report();
+				break;
+			case 4:
+				return;
+			default:
+				cout << "Invalid input, please re_enter.\n";
+				break;
+		}
 
-			switch (first_char) {
-				case '1':
-					generate_daily_report();
-					break;
-				case '2':
-					generate_top_revenue_report();
-					break;
-				case '3':
-					generate_summary_report();
-					break;
-				case '4':
-					cout << "Exiting...\n";
-					return;
-				default:
-					cout << "Invalid input, please re_enter.\n";
-					break;
-			}
-		} while (first_char < '1' || first_char > '4');
-
-		do {
-			cout << "Continue? (Y/N): ";
-			getline(cin, input);
-			first_char = toupper(input[0]);
-		} while (first_char != 'Y' && first_char != 'N');
-
-	} while (first_char == 'Y');
+	} while (get_bool("Continue? [Y/N]: ", "Invalid input, please try again"));
 }

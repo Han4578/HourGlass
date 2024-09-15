@@ -8,7 +8,7 @@
 };
 
  Customer users[20] = { "admin", "password" };
- Customer user = { "Bob", "hi", {}, {{1, 2, 3, 4}, {2, 3, 4,5 }, {5, 6, 7, 8} } };
+ Customer user = { "Bob", "hi", {}, {{1, 2, 3, 4}, {2, 3, 4,5 }, {5, 6, 7, 8} } , 1};
 
 void display_logo() {
 	ifstream logo("logo.dat");
@@ -74,47 +74,23 @@ void new_customer() {
 }
 
 int main() {
-	//while (true) {
-	//	system("cls");
-	//	display_logo();
-	//	cout << "\nWelcome!\n"
-	//			"1. New Order Entry\n"
-	//			"2. Cancel Order\n"
-	//			"3. Log Out\n"
-	//			"4. Exit\n";
-	//	int choice = get_input("Please select an action[1-3]: ", 1, 3, "Invalid action, please try again", false);
-	//	cout << '\n';
-
-	//	switch (choice) {
-	//		case 1:
-	//			new_customer();
-	//			break;
-	//		case 2:
-	//			cancel_order();
-	//			break;
-	//		case 3:
-	//			return 0; //exit
-	//		case 4:
-	//			return 0; //exit
-	//	}
-	//}
 	while (true) {
 		system("cls");
 		display_logo();
 		cout << "\nWelcome!\n"
-				"1. Report\n"
-				"2. Import\n"
+				"1. New Order Entry\n"
+				"2. Cancel Order\n"
 				"3. Log Out\n"
 				"4. Exit\n";
-		int choice = get_input("Please select an action[1-4]: ", 1, 4, "Invalid action, please try again", false), customer_id = 0;
+		int choice = get_input("Please select an action[1-3]: ", 1, 4, "Invalid action, please try again", false);
 		cout << '\n';
-
+	
 		switch (choice) {
 			case 1:
-				report();
+				new_customer();
 				break;
 			case 2:
-				import();
+				cancel_order();
 				break;
 			case 3:
 				return 0; //exit
@@ -122,4 +98,29 @@ int main() {
 				return 0; //exit
 		}
 	}
+
+	//while (true) {
+	//	system("cls");
+	//	display_logo();
+	//	cout << "\nWelcome!\n"
+	//			"1. Report\n"
+	//			"2. Import\n"
+	//			"3. Log Out\n"
+	//			"4. Exit\n";
+	//	int choice = get_input("Please select an action[1-4]: ", 1, 4, "Invalid action, please try again", false), customer_id = 0;
+	//	cout << '\n';
+
+	//	switch (choice) {
+	//		case 1:
+	//			report();
+	//			break;
+	//		case 2:
+	//			import();
+	//			break;
+	//		case 3:
+	//			return 0; //exit
+	//		case 4:
+	//			return 0; //exit
+	//	}
+	//}
 }

@@ -30,6 +30,8 @@ const string categories[number_of_categories] = { "Chairs", "Tables", "Shelves" 
 
 int get_input(string message, int min, int max, string invalid_message, bool escapable);
 
+bool get_bool(string message, string error);
+
 void add_order();
 
 void remove_order();

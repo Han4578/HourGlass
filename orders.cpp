@@ -32,6 +32,16 @@ int get_input(string message, char min, char max, string invalid_message) {
 	return input - min;
 }
 
+bool get_bool(string message, string error) {
+	string answer = "";
+	while (answer != "Y" && answer != "N") {
+		cout << message << endl;
+		getline(cin, answer);
+		if (answer != "Y" && answer != "N" && answer != "y" && answer != "n") cout << error << endl;
+	}
+	return answer == "Y" || answer == "y";
+}
+
 struct Order {
 	int category = 0, product_number = 0, quantity = 0;
 };
@@ -78,67 +88,88 @@ void remove_order() {
 }
 
 void cancel_order() {
-	system("cls");
-	cout << "The 3 most recent orders are saved, please select the order you wish to cancel\n\n";
-	int i = 0;
+	int index = 0;
 
-	for (i = 0; i < 3; ++i) {
-		bool is_filled = false;
-		for (int j = 0; j < number_of_categories; ++j) {
-			for (int k = 0; k < products_per_category; ++k) {
-				if (user.recent_orders[(user.order_index - i + 2) % 3][j][k] > 0) {
-					is_filled = true;
-					break;
+	while (true) {
+		system("cls");
+		cout << "The 3 most recent orders are saved, please select the order you wish to cancel\n\n";
+		int i = 0;
+
+		for (i = 0; i < 3; ++i) {
+			bool is_filled = false;
+			for (int j = 0; j < number_of_categories; ++j) {
+				for (int k = 0; k < products_per_category; ++k) {
+					if (user.recent_orders[(user.order_index - i + 2) % 3][j][k] > 0) { //check for past orders
+						is_filled = true;
+						break;
+					}
+				}
+				if (is_filled) break;
+			}
+
+			if (!is_filled) break;
+
+			float total = 0;
+			cout << "Order " << i + 1 << '\n';											//lists orders from newest to oldest regardless of index
+			cout << setfill('_') << setw(22) << '_' << '\n';
+			cout << setfill(' ') << "| Name " << "   | Quantity" << " |\n";
+			for (int j = 0; j < number_of_categories; ++j) {
+				for (int k = 0; k < products_per_category; ++k) {
+					if (user.recent_orders[(user.order_index - i + 2) % 3][j][k] == 0) continue;
+
+					cout << '|' << left << setw(9) << products[j][k].name << '|' << right << setw(10) << user.recent_orders[((user.order_index - i + 2) % 3) % 3][j][k] << "|\n";
+					total += products[j][k].price * user.recent_orders[(user.order_index - i + 2) % 3][j][k];
 				}
 			}
-			if (is_filled) break;
+			cout << '|' << setw(20) << setfill('_') << '_' << "|\n";
+			cout << '|' << setw(10) << setfill(' ') << "Total: RM " << setw(10) << fixed << setprecision(2) << total << "|\n";
+			cout << '|' << setw(20) << setfill('_') << '_' << "|\n\n";
+		}
+		if (i == 0) {
+			cout << "There are no past orders saved\n\n";
+			system("pause");
+			return;
 		}
 
-		if (!is_filled) break;
-
+		int order = get_input("Please enter order number to cancel, or press Q to return: ", 1, i, "Invalid input, please try again", true);
+		if (order == -1) return;
+		index = (user.order_index - order + 3) % 3;		//get actual index of the order selected as order number is relative to order index
 		float total = 0;
+
 		cout << "Order " << i + 1 << '\n';
 		cout << setfill('_') << setw(22) << '_' << '\n';
 		cout << setfill(' ') << "| Name " << "   | Quantity" << " |\n";
-		for(int j = 0; j < number_of_categories; ++j) {
+		for (int j = 0; j < number_of_categories; ++j) {
 			for (int k = 0; k < products_per_category; ++k) {
-				if (user.recent_orders[(user.order_index - i + 2) % 3][j][k] == 0) continue;
+				if (user.recent_orders[index][j][k] == 0) continue;
 
-				cout << '|' << left << setw(9) << products[j][k].name << '|' << right << setw(10) << user.recent_orders[((user.order_index - i + 2) % 3) % 3][j][k] << "|\n";
-				total += products[j][k].price * user.recent_orders[(user.order_index - i + 2) % 3][j][k];
+				cout << '|' << left << setw(9) << products[j][k].name << '|' << right << setw(10) << user.recent_orders[(index) % 3][j][k] << "|\n";
+				total += products[j][k].price * user.recent_orders[index][j][k];
 			}
 		}
 		cout << '|' << setw(20) << setfill('_') << '_' << "|\n";
 		cout << '|' << setw(10) << setfill(' ') << "Total: RM " << setw(10) << fixed << setprecision(2) << total << "|\n";
 		cout << '|' << setw(20) << setfill('_') << '_' << "|\n\n";
-	}
-	if (i == 0) {
-		cout << "There are no past orders saved\n\n";
-		system("pause");
-		return;
+
+		if (get_bool("Confirm cancel? [Y/N]", "Invalid input, please try again")) break;
 	}
 
-	int order = get_input("Please enter order number to cancel, or press Q to return: ", 1, i, "Invalid input, please try again", true);
-	if (order == -1) return;
-
-	int index = (user.order_index - order + 3) % 3;
-
-	for (int j = 0; j < number_of_categories; ++j) {
+	for (int j = 0; j < number_of_categories; ++j) {						//reduce total sold based on cancelled order
 		for (int k = 0; k < products_per_category; ++k) {
 			products[j][k].total_sold -= user.recent_orders[index][j][k];
 		}
 	}
 
-	while (index != user.order_index) {
-		for (int j = 0; j < number_of_categories; ++j) {
+	while (index != user.order_index) {										//shift all orders older than the cancelled order to the left so order
+		for (int j = 0; j < number_of_categories; ++j) {					//index inserts the next order into the empty slot instead of replacing
 			for (int k = 0; k < products_per_category; ++k) {
-				user.recent_orders[index][j][k] = user.recent_orders[(index - 1) % 3][j][k];
+				user.recent_orders[index][j][k] = user.recent_orders[(index - 1 + 3) % 3][j][k];
 			}
 		}
 		index = (index - 1 + 3) % 3;
 	}
 
-	for (int j = 0; j < number_of_categories; ++j) {
+	for (int j = 0; j < number_of_categories; ++j) {						//clear the slot of order index
 		for (int k = 0; k < products_per_category; ++k) {
 			user.recent_orders[index][j][k] = 0;
 		}
