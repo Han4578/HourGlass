@@ -43,7 +43,8 @@ bool invoice() {
     const float total = generate_invoice();   
 
     if (total == 0) {
-        cout << "No items ordered, cannot confirm purchase\n";
+        cout << "No items ordered, cannot confirm purchase\n\n";
+        system("pause");
         return false;
     }
 

@@ -34,7 +34,7 @@ int get_input(string message, char min, char max, string invalid_message) {
 
 bool get_bool(string message, string error) {
 	string answer = "";
-	while (answer != "Y" && answer != "N") {
+	while (answer != "Y" && answer != "N" && answer != "y" && answer != "n") {
 		cout << message << endl;
 		getline(cin, answer);
 		if (answer != "Y" && answer != "N" && answer != "y" && answer != "n") cout << error << endl;
@@ -136,7 +136,7 @@ void cancel_order() {
 		index = (user.order_index - order + 3) % 3;		//get actual index of the order selected as order number is relative to order index
 		float total = 0;
 
-		cout << "Order " << i + 1 << '\n';
+		cout << "Order " << order << '\n';
 		cout << setfill('_') << setw(22) << '_' << '\n';
 		cout << setfill(' ') << "| Name " << "   | Quantity" << " |\n";
 		for (int j = 0; j < number_of_categories; ++j) {
