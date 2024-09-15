@@ -57,7 +57,7 @@ Order get_order(bool get_quantity) {
 	return { category, product_number, quantity };
 }
 
-void add_order() {
+void add_to_cart() {
 	cout << "\nAdd order selected. Enter Q at any time to cancel.\n";
 	const Order order = get_order(true);
 	if (order.category == -1 || order.product_number == -1 || order.quantity == -1) return;
@@ -72,7 +72,7 @@ void add_order() {
 	system("pause");
 }
 
-void remove_order() {
+void remove_from_cart() {
 	cout << "\nRemove order selected. Enter -1 at any time to cancel.\n";
 	const Order order = get_order(false);
 	if (order.category == -1) return;
@@ -85,6 +85,10 @@ void remove_order() {
 	}
 
 	system("pause");
+}
+
+void clear_cart() {
+
 }
 
 void cancel_order() {

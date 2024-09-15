@@ -32,9 +32,11 @@ int get_input(string message, int min, int max, string invalid_message, bool esc
 
 bool get_bool(string message, string error);
 
-void add_order();
+void add_to_cart();
 
-void remove_order();
+void remove_from_cart();
+
+void clear_cart();
 
 void cancel_order();
 

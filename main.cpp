@@ -44,23 +44,27 @@ void new_customer() {
 
 		int choice = 0;
 		cout << "\nActions\n"
-			"1. Add Order\n"
-			"2. Remove Order\n"
-			"3. Show Invoice\n"
-			"4. Cancel\n";
-		choice = get_input("Enter next action[1-4]: ", 1, 4, "Invalid action, please try again", false);
+			"1. Add to Cart\n"
+			"2. Remove from Cart\n"
+			"3. Clear Cart\n"
+			"4. Show Invoice\n"
+			"5. Cancel\n";
+		choice = get_input("Enter next action[1-5]: ", 1, 5, "Invalid action, please try again", false);
 		cout << '\n';
 		switch (choice) {
 			case 1: // add order
-				add_order();
+				add_to_cart();
 				break;
 			case 2: //remove order
-				remove_order();
+				remove_from_cart();
 				break;
-			case 3:
-				if (invoice()) return; //if receipt is generated and payment is made, return true
+			case 3: //remove order
+				clear_cart();
 				break;
 			case 4:
+				if (invoice()) return; //if receipt is generated and payment is made, return true
+				break;
+			case 5:
 				for (int i = 0; i < number_of_categories; ++i) {
 					for (int j = 0; j < products_per_category; ++j) {
 						products[i][j].currently_ordered = 0;
