@@ -10,13 +10,13 @@ struct Product {
 	int currently_ordered = 0, total_sold = 0;
 };
 
-const int number_of_categories = 3, products_per_category = 5;
+const int number_of_categories = 3, products_per_category = 5, recently_ordered_limit = 3;
 
 struct Customer {
 	string name = "";
 	string password;
 	int cart[number_of_categories][products_per_category] = {0};
-	int recent_orders[3][number_of_categories][products_per_category] = {0};
+	int recent_orders[recently_ordered_limit][number_of_categories][products_per_category] = {0};
 	int order_index = 0;
 };
 
