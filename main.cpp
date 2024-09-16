@@ -146,6 +146,9 @@ bool register_user() {
 		if (users[i].name == "") {
 			users[i] = { name, password };
 			break;
+		} else if (i == 19) {
+			cout << "User list is full, no new accounts can be registered.\n\n";
+			system("pause");
 		}
 	}
 	return true;
