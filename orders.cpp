@@ -16,7 +16,7 @@ int get_input(string message, int min, int max, string invalid_message, bool esc
 	return input;
 }
 
-int get_input(string message, char min, char max, string invalid_message) {
+int get_char_input(string message, char min, char max, string invalid_message) {
 	char input = 0;
 	string invalid_input = "";
 	while (true) {
@@ -47,7 +47,7 @@ struct Order {
 };
 
 Order get_order(bool get_quantity) {
-	const int category = get_input("Enter Category[A-C]:", 'A', 'C', "Invalid category, please try again.");
+	const int category = get_char_input("Enter Category[A-C]:", 'A', 'C', "Invalid category, please try again.");
 	if (category == -1) return { -1 };
 	const int product_number = get_input("Enter Product Number[1-5]:", 1, 5, "Invalid product number, please try again.", true);
 	if (product_number == -1) return { -1 };

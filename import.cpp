@@ -44,7 +44,8 @@ void import() {
 					imported[i][number_index++] = stoi(temp);
 					temp = "";
 				} else if (isdigit(input[j])) {
-					if (input[j] == '0' && temp == "") continue;
+					if (input[j] == '0' && temp == "0") continue;
+					if (temp.length() > 1 && temp[0] == '0') temp = temp.substr(1, temp.length());
 					if (temp.length() >= 9) {
 						cout << "\nWarning: Number cannot be greater than 9 digits, remaining digits after the 9th from the left will be skipped.";
 						warning = true;

@@ -34,7 +34,6 @@ void generate_daily_report() {
 void generate_top_revenue_report() {
 	system("cls");
 	Product total_products[number_of_categories * products_per_category] = {};
-	int number = 0;
 
 	for (int category = 0; category < number_of_categories; category++) {
 		for (int product = 0; product < products_per_category; product++) {
