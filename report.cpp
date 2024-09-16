@@ -38,7 +38,7 @@ void generate_top_revenue_report() {
 
 	for (int category = 0; category < number_of_categories; category++) {
 		for (int product = 0; product < products_per_category; product++) {
-			total_products[number++] = products[category][product];
+			total_products[category * number_of_categories + product] = products[category][product];
 		}
 	}
 

@@ -49,17 +49,17 @@ void new_order() {
 			"2. Remove from Cart\n"
 			"3. Clear Cart\n"
 			"4. Show Invoice\n"
-			"5. Cancel\n";
+			"5. Save and Leave\n";
 		choice = get_input("Enter next action[1-5]: ", 1, 5, "Invalid action, please try again", false);
 		cout << '\n';
 		switch (choice) {
-			case 1: // add order
+			case 1: 
 				add_to_cart();
 				break;
-			case 2: //remove order
+			case 2: 
 				remove_from_cart();
 				break;
-			case 3: //remove order
+			case 3: 
 				clear_cart();
 				break;
 			case 4:
@@ -194,26 +194,22 @@ int main() {
 		bool success = false;
 		system("cls");
 		display_logo();
-		int ans = get_input("Main Menu\n1. Log In\n2. Sign Up\n3. Exit\n", 1, 3, "Invalid input, please try again", false);
-
+		cout << "Main Menu\n1.Log In\n2.Sign Up\n3.Exit\n";
+		string ans;
+		getline(cin, ans);
 		system("cls");
-		switch (ans) {
-			case 1:
-				while (!success) {
-					success = login();
-					if (!success) {
-						system("pause");
-						system("cls");
-					}
-				}
-				break;
-			case 2:
-				while (!success) {
-					success = register_user();
-				}
-				break;
-			case 3:
-				return 0;
+		if (ans == "1") {
+			while (success == 0) {
+				success = login();
+				system("pause");
+				system("cls");
+			}
+		} else if (ans == "2") {
+			while (success == 0) {
+				success = register_user();
+			}
+		} else if (ans == "3") {
+			return;
 		}
 	}
 }
