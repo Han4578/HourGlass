@@ -209,8 +209,10 @@ int main() {
 		if (ans == "1") {
 			while (!success) {
 				success = login();
-				system("pause");
-				system("cls");
+				if (!success) {
+					system("pause");
+					system("cls");
+				}
 			}
 		} else if (ans == "2") {
 			while (!success) {
