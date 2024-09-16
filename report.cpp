@@ -98,7 +98,6 @@ void generate_summary_report() {
 	}
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << "Total(RM): " << setw(width / 2 - 1) << setprecision(2) << left << total << "|\n";
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Total Products Sold: " << setw(width / 2 - 1) << setprecision(0) << left << quantity << "|\n";
-	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Number of Customers: " << setw(width / 2 - 1) << left << 0 << "|\n";
 	cout << '|' << setw(width - 2) << setfill('_') << '_' << setfill(' ') << "|\n";
 
 	system("pause");
