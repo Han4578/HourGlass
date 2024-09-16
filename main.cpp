@@ -2,13 +2,14 @@
 #include <fstream>
 
  Product products[number_of_categories][products_per_category] = {
-	{ {"ADDE", 49}, {"POÄNG", 309}, {"FLINTAN", 299.99f}, {"TEODORES", 125}, {"MARIUS", 25}}, //chairs
+	{ {"ADDE", 49}, {"POANG", 309}, {"FLINTAN", 299.99f}, {"TEODORES", 125}, {"MARIUS", 25}}, //chairs
 	{ {"LAGKAPTEN", 428}, {"UTESPELARE", 599.99f}, {"SANDSBERG", 179}, {"MITTZON", 799}, {"KNARREVIK", 39}}, //tables
-	{ {"LERBERG", 89}, {"KALLAX", 299}, {"LACK", 299}, {"FRÖSJÖN", 99}, {"FRYKSÅS", 149}} //shelves
+	{ {"LERBERG", 89}, {"KALLAX", 299}, {"LACK", 299}, {"FROSJON", 99}, {"FRYKSAS", 149}} //shelves
 };
 
- Customer users[20] = { "admin", "password" };
- Customer user = { "Bob", "hi", {}, {{1, 2, 3, 4}, {2, 3, 4,5 }, {5, 6, 7, 8} } , 1};
+
+ Customer users[20] = { {"admin","password"}, {"bob", "123"}};
+ int userID = 0;
 
 void display_logo() {
 	ifstream logo("logo.dat");
@@ -35,7 +36,7 @@ string calculate_time() {
 	return times[2] + ':' + times[1] + ':' + times[0] + ((hours >= 11) ? "PM" : "AM");
 }
 
-void new_customer() {
+void new_order() {
 	while (true) {
 		system("cls");
 		display_table();
@@ -65,66 +66,154 @@ void new_customer() {
 				if (invoice()) return; //if receipt is generated and payment is made, return true
 				break;
 			case 5:
-				for (int i = 0; i < number_of_categories; ++i) {
-					for (int j = 0; j < products_per_category; ++j) {
-						products[i][j].currently_ordered = 0;
-					}
-				}
 				return; // cancel
-			default:
-				break;
 		}
+	}
+}
+
+void customer() {
+	while (true) {
+		system("cls");
+		display_logo();
+		cout << "\nWelcome!\n"
+			"1. New Order Entry\n"
+			"2. Cancel Order\n"
+			"3. Log Out\n"
+			"4. Exit\n";
+		int choice = get_input("Please select an action[1-3]: ", 1, 4, "Invalid action, please try again", false);
+		cout << '\n';
+
+		switch (choice) {
+		case 1:
+			new_order();
+			break;
+		case 2:
+			cancel_order();
+			break;
+		case 3:
+			return ; //exit
+		case 4:
+			abort() ; //exit
+		}
+	}
+}
+void admin() {
+	while (true) {
+		system("cls");
+		display_logo();
+		cout << "\nWelcome!\n"
+			"1. Report\n"
+			"2. Import\n"
+			"3. Log Out\n"
+			"4. Exit\n";
+		int choice = get_input("Please select an action[1-4]: ", 1, 4, "Invalid action, please try again", false);
+		cout << '\n';
+
+		switch (choice) {
+		case 1:
+			report();
+			break;
+		case 2:
+			import();
+			break;
+		case 3:
+			return;
+		case 4:
+			abort();
+		}
+	}
+}
+
+bool register_user() {
+	string password = "", name = "";
+	cout << "Register" << endl;
+	cout << "Input Q to exit" << endl;
+	cout << "Enter Your Name : ";
+	getline(cin, name);
+	if (name == "Q" || name == "q") return true;
+	
+	for (int i = 0; i < 20; i++) {
+		if (name == users[i].name) {
+			cout << "Name has been taken" << endl;
+			system("pause");
+			system("cls");
+			return false;
+		}
+	}
+	cout << "Enter Your Password : ";
+	getline(cin, password);
+	for (int i = 0; i < 20; i++) {
+		if (users[i].name == "") {
+			users[i] = { name, password };
+			break;
+		}
+	}
+	return true;
+}
+
+bool login() {
+	string crtpassword = "", password = "", name = "";
+	bool valid = false;
+	cout << "Login\nInput Q to exit\nEnter Your Name : ";
+	getline(cin, name);
+
+	if (name == "Q" || name == "q") return true;
+
+	if (name != "") {
+		for (userID = 0; userID < 20; ++userID) {
+			if (name == users[userID].name) {
+				crtpassword = users[userID].password;
+				valid = true;
+				break;
+			}
+		}
+		if (!valid) {
+			cout << "User does not exist" << endl;
+			return false;
+		}
+	} else {
+		cout << "Name cannot be empty" << endl;
+		return false;
+	}
+
+	cout << "Enter Your Password : ";
+	getline(cin, password);
+	if (password == crtpassword) {
+		if (name == "admin") admin();
+		else customer();
+		return true;
+
+	} else {
+		cout << "Wrong password" << endl;
+		return false;
 	}
 }
 
 int main() {
 	while (true) {
+		bool success = false;
 		system("cls");
 		display_logo();
-		cout << "\nWelcome!\n"
-				"1. New Order Entry\n"
-				"2. Cancel Order\n"
-				"3. Log Out\n"
-				"4. Exit\n";
-		int choice = get_input("Please select an action[1-3]: ", 1, 4, "Invalid action, please try again", false);
-		cout << '\n';
-	
-		switch (choice) {
+		int ans = get_input("Main Menu\n1. Log In\n2. Sign Up\n3. Exit\n", 1, 3, "Invalid input, please try again", false);
+
+		system("cls");
+		switch (ans) {
 			case 1:
-				new_customer();
+				while (!success) {
+					success = login();
+					if (!success) {
+						system("pause");
+						system("cls");
+					}
+				}
 				break;
 			case 2:
-				cancel_order();
+				while (!success) {
+					success = register_user();
+				}
 				break;
 			case 3:
-				return 0; //exit
-			case 4:
-				return 0; //exit
+				return 0;
 		}
 	}
-
-	//while (true) {
-	//	system("cls");
-	//	display_logo();
-	//	cout << "\nWelcome!\n"
-	//			"1. Report\n"
-	//			"2. Import\n"
-	//			"3. Log Out\n"
-	//			"4. Exit\n";
-	//	int choice = get_input("Please select an action[1-4]: ", 1, 4, "Invalid action, please try again", false), customer_id = 0;
-	//	cout << '\n';
-
-	//	switch (choice) {
-	//		case 1:
-	//			report();
-	//			break;
-	//		case 2:
-	//			import();
-	//			break;
-	//		case 3:
-	//			return 0; //exit
-	//		case 4:
-	//			return 0; //exit
-	//	}
-	//}
 }

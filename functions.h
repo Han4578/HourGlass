@@ -7,23 +7,24 @@ using namespace std;
 struct Product {
 	string name = "";
 	float price = 0;
-	int currently_ordered = 0, total_sold = 0;
+	int total_sold = 0;
 };
 
 const int number_of_categories = 3, products_per_category = 5, recently_ordered_limit = 3;
 
 struct Customer {
 	string name = "";
-	string password;
+	string password = "";
 	int cart[number_of_categories][products_per_category] = {0};
 	int recent_orders[recently_ordered_limit][number_of_categories][products_per_category] = {0};
 	int order_index = 0;
 };
 
+extern int userID;
+
+extern  Customer users[20];
 
 extern Product products[number_of_categories][products_per_category];
-
-extern Customer user;
 
 const string categories[number_of_categories] = { "Chairs", "Tables", "Shelves" };
 
