@@ -10,7 +10,6 @@ void import() {
 		int imported[number_of_categories][products_per_category] = { 0 };
 		string input = "";
 		bool warning = false;
-		char confirm = ' ';
 
 		cout << "Please ensure that the format of the file is correct, each line should have " << products_per_category << " numbers \n"
 				"indicating the quantity sold for each product. Each number should be separated by a space or a tab.\n"

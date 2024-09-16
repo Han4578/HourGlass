@@ -140,8 +140,13 @@ bool register_user() {
 			return false;
 		}
 	}
-	cout << "Enter Your Password : ";
-	getline(cin, password);
+
+	while(password == "") {
+		cout << "Enter Your Password : ";
+		getline(cin, password);
+		if (password == "") cout << "\nPassword cannot be empty\n";
+	}
+
 	for (int i = 0; i < 20; i++) {
 		if (users[i].name == "") {
 			users[i] = { name, password };
