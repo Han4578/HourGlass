@@ -19,7 +19,7 @@ void display_logo() {
 		return;
 	}
 	
-	string line;
+	string line = "";
 	while (getline(logo, line)) cout << line << '\n';
 	logo.close();
 }
@@ -93,7 +93,7 @@ void customer() {
 		case 3:
 			return ; //exit
 		case 4:
-			abort() ; //exit
+			exit(EXIT_SUCCESS) ; //exit
 		}
 	}
 }
@@ -119,7 +119,7 @@ void admin() {
 		case 3:
 			return;
 		case 4:
-			abort();
+			exit(EXIT_SUCCESS);
 		}
 	}
 }
@@ -198,21 +198,21 @@ int main() {
 		system("cls");
 		display_logo();
 		cout << "Main Menu\n1.Log In\n2.Sign Up\n3.Exit\n";
-		string ans;
+		string ans = "";
 		getline(cin, ans);
 		system("cls");
 		if (ans == "1") {
-			while (success == 0) {
+			while (!success) {
 				success = login();
 				system("pause");
 				system("cls");
 			}
 		} else if (ans == "2") {
-			while (success == 0) {
+			while (!success) {
 				success = register_user();
 			}
 		} else if (ans == "3") {
-			return;
+			return 0;
 		}
 	}
 }
