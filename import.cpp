@@ -14,7 +14,7 @@ void import() {
 		cout << "Please ensure that the format of the file is correct, each line should have " << products_per_category << " numbers \n"
 				"indicating the quantity sold for each product. Each number should be separated by a space or a tab.\n"
 				"There should be " << number_of_categories << " lines in total. Incorrect format may result in incorrect import.\n"
-				"Numbers can only be whole numbers with no decimals or negative signs and no more than 7 digits.\nAll symbols will be ignored.\n\n"
+				"Numbers can only be whole numbers with no decimals or negative signs and no more than 9 digits.\nAll symbols will be ignored.\n\n"
 				"Enter file name here (.dat), enter Q to cancel: ";
 		getline(cin, input);
 

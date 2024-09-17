@@ -93,6 +93,8 @@ void clear_cart() {
 			users[userID].cart[i][j] = 0;
 		}
 	}
+	cout << "Cart has been cleared.\n";
+	system("pause");
 }
 
 void cancel_order() {
@@ -182,4 +184,7 @@ void cancel_order() {
 			users[userID].recent_orders[index][j][k] = 0;
 		}
 	}
+
+	cout << "Order has been cancelled.\n";
+	system("pause");
 }

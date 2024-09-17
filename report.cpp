@@ -27,8 +27,6 @@ void generate_daily_report() {
 	}
 	cout << "| Total earnings for the day: RM" << setw(23) << setprecision(2) << left << total_earnings << "|\n";
 	cout << "|______________________________________________________|\n\n";
-
-	system("pause");
 }
 
 void generate_top_revenue_report() {
@@ -41,9 +39,8 @@ void generate_top_revenue_report() {
 		}
 	}
 
-
 	for (int i = 0; i < 10; i++) {
-		for (int j = i + 1; j < products_per_category; j++) {
+		for (int j = i + 1; j < products_per_category * number_of_categories; j++) {
 			float total1 = total_products[i].price * total_products[i].total_sold;
 			float total2 = total_products[j].price * total_products[j].total_sold;
 			if (total1 < total2) {
@@ -55,7 +52,7 @@ void generate_top_revenue_report() {
 	}
 
 	cout << "_____________________________________________________\n";
-	cout << "|" << setw(34) << "TOP REVENUE REPORT" << setw(19) << "|\n";
+	cout << "|" << right << setw(34) << "TOP REVENUE REPORT" << setw(19) << "|\n";
 	cout << "|___________________________________________________|\n";
 	cout << "| " << left << setw(15) << "No. Product" << "|" << right << setw(12) << "PRICE(RM)" << "|" << right << setw(9) << "QUANTITY" << "|" << right << setw(11) << "TOTAL(RM)" << "|" << endl;
 	cout << "|---------------------------------------------------|\n";
@@ -99,7 +96,6 @@ void generate_summary_report() {
 	cout << '|' << setw(width / 2 - 1) << setfill(' ') << right << "Total Products Sold: " << setw(width / 2 - 1) << setprecision(0) << left << quantity << "|\n";
 	cout << '|' << setw(width - 2) << setfill('_') << '_' << setfill(' ') << "|\n";
 
-	system("pause");
 }
 
 void report() {

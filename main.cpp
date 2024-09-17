@@ -75,7 +75,7 @@ void customer() {
 	while (true) {
 		system("cls");
 		display_logo();
-		cout << "\nWelcome!\n"
+		cout << "\nWelcome, " << users[userID].name << "!\n"
 			"1. New Order Entry\n"
 			"2. Cancel Order\n"
 			"3. Log Out\n"
@@ -101,7 +101,7 @@ void admin() {
 	while (true) {
 		system("cls");
 		display_logo();
-		cout << "\nWelcome!\n"
+		cout << "\nWelcome, admin!\n"
 			"1. Report\n"
 			"2. Import\n"
 			"3. Log Out\n"
@@ -130,26 +130,33 @@ bool register_user() {
 	cout << "Input Q to exit" << endl;
 	cout << "Enter Your Name : ";
 	getline(cin, name);
+
 	if (name == "Q" || name == "q") return true;
+	if (name == "") {
+		cout << "Name cannot be empty\n";
+		return false;
+	}	
 	
 	for (int i = 0; i < 20; i++) {
 		if (name == users[i].name) {
 			cout << "Name has been taken" << endl;
-			system("pause");
-			system("cls");
 			return false;
 		}
 	}
 
-	while(password == "") {
-		cout << "Enter Your Password : ";
-		getline(cin, password);
-		if (password == "") cout << "\nPassword cannot be empty\n";
+	cout << "Enter Your Password : ";
+	getline(cin, password);
+	if (password == "Q" || password == "q") return true;
+	if (password == "") {
+		cout << "Password cannot be empty\n";
+		return false;
 	}
 
 	for (int i = 0; i < 20; i++) {
 		if (users[i].name == "") {
 			users[i] = { name, password };
+			cout << "Registration success, please log in again.\n";
+			system("pause");
 			break;
 		} else if (i == 19) {
 			cout << "User list is full, no new accounts can be registered.\n\n";
@@ -187,6 +194,9 @@ bool login() {
 	cout << "Enter Your Password : ";
 	getline(cin, password);
 	if (password == crtpassword) {
+		cout << "Log in success\n";
+		system("pause");
+
 		if (name == "admin") admin();
 		else customer();
 		return true;
@@ -217,6 +227,10 @@ int main() {
 		} else if (ans == "2") {
 			while (!success) {
 				success = register_user();
+				if (!success) {
+					system("pause");
+					system("cls");
+				}
 			}
 		} else if (ans == "3") {
 			return 0;
